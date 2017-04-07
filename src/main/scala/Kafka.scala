@@ -36,6 +36,39 @@ object PrintKafkaData {
     ssc.awaitTermination()
   }
 }
+object CountKafkaData {
+  def main(args: Array[String]) {
+    // zkQuorum(127.0.0.1:2181), group(test), topics(nginx), numThreads(2), Sec
+    if (args.length < 5) {
+      System.exit(1)
+    }
+    val Array(zkQuorum, group, topic, numThreads, sec) = args
+    val secSleep    = sec.toInt
+    val sparkConf   = new SparkConf().setAppName("KafkaWorker")
+    val ssc         = new StreamingContext(sparkConf, Seconds(secSleep))
+    val kafkaParams = Map[String,String](
+      "metadata.broker.list" -> zkQuorum,
+      "goup.id" -> group,
+      "goup.id" -> group,
+      "auto.create.topics.enable" -> "true"
+    )
+    val kafkaStream = KafkaUtils.createDirectStream(
+      ssc,
+      kafkaParams,
+      Set(topic)
+    )
+    ssc.checkpoint("checkpoint")
+
+    kafkaStream.foreachRDD{ rdd => 
+    }
+    //  println("### Start %s ###".format(Calendar.getInstance.getTime.toString))
+    //  println(rdd.count) 
+    //  //println("### END %s ###\n".format(Calendar.getInstance.getTime.toString))
+    //}
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}
 
 object AccessLogKafkaWorker {
   case class FluentEvent(
