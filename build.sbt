@@ -12,8 +12,11 @@ libraryDependencies += "io.circe" % "circe-parser_2.11" % "0.6.1"
 libraryDependencies += "io.circe" % "circe-generic_2.11" % "0.6.1"
 libraryDependencies += "net.liftweb" % "lift-json_2.11" % "3.0.1"
 libraryDependencies += "com.github.seratch" % "ltsv4s_2.11" % "1.0.+"
-libraryDependencies += "org.apache.flink" % "flink-scala_2.11" % "0.10.2"
-libraryDependencies += "org.apache.flink" % "flink-clients_2.11" % "0.10.2"
+//libraryDependencies += "org.apache.flink" %% "flink-core" % "1.1.4"
+libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.1.4"
+//libraryDependencies += "org.apache.flink" %% "flink-connector-kafka" % "1.1.4"
+libraryDependencies += "org.apache.flink" %% "flink-streaming-scala" % "1.1.4"
+
 
 assemblyMergeStrategy in assembly := {
   case PathList("javax", "servlet", xs @ _*)         => MergeStrategy.first
